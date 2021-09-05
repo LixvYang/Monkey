@@ -142,7 +142,7 @@ if (5 < 10) {
 }
 
 // test single-line comment
-func TestSimpleComment(t *testing.T)  {
+func TestSimpleComment(t *testing.T) {
 	input := `=+ //This is a comment
 //This is still a comment
 # I like comments
@@ -152,10 +152,10 @@ let a = 1;#This is a comment too.
 `
 
 	tests := []struct {
-		expectedType  	token.TokenType
-		expectedLiteral	string
+		expectedType    token.TokenType
+		expectedLiteral string
 	}{
-		{token.ASSIGN,"="},
+		{token.ASSIGN, "="},
 		{token.PLUS, "+"},
 		{token.LET, "let"},
 		{token.IDENT, "a"},
@@ -165,13 +165,13 @@ let a = 1;#This is a comment too.
 		{token.EOF, ""},
 	}
 	l := New(input)
-	for i,tt := range tests {
+	for i, tt := range tests {
 		tok := l.NextToken()
 		if tok.Type != tt.expectedType {
-			t.Fatalf("tests[%d] - tokentype wrong,expected=%q,got=%q",i,tt.expectedType,tok.Type)
+			t.Fatalf("tests[%d] - tokentype wrong,expected=%q,got=%q", i, tt.expectedType, tok.Type)
 		}
 		if tok.Literal != tt.expectedLiteral {
-			t.Fatalf("tests[%d] - Literal wrong, expected=%q, got=%q",i, tt.expectedLiteral, tok.Literal)
+			t.Fatalf("tests[%d] - Literal wrong, expected=%q, got=%q", i, tt.expectedLiteral, tok.Literal)
 		}
 	}
 }

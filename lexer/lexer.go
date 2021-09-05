@@ -5,16 +5,16 @@ import (
 )
 
 type Lexer struct {
-	input        string
+	input string
 
 	// current position in input (points to current char)
-	position     int  
+	position int
 
 	// current reading position in input (after current char)
-	readPosition int  
+	readPosition int
 
 	// current char under examination
-	ch           byte 
+	ch byte
 }
 
 func New(input string) *Lexer {
@@ -29,11 +29,11 @@ func (l *Lexer) NextToken() token.Token {
 	l.skipWhitespace()
 
 	// skip single-line comments
-	if l.ch == byte('#') || 
+	if l.ch == byte('#') ||
 		(l.ch == byte('/') && l.peekChar() == byte('/')) {
-			l.skipComment()
-			return (l.NextToken())
-		}
+		l.skipComment()
+		return (l.NextToken())
+	}
 
 	//multi-line comments
 	if l.ch == byte('/') && l.peekChar() == byte('*') {
@@ -120,7 +120,7 @@ func (l *Lexer) skipWhitespace() {
 }
 
 //skip single-line comment
-func (l *Lexer) skipComment()  {
+func (l *Lexer) skipComment() {
 	for l.ch != '\n' && l.ch != byte(0) {
 		l.readChar()
 	}
@@ -128,9 +128,9 @@ func (l *Lexer) skipComment()  {
 }
 
 //consume all tokens until we've had the close of multi-line comment
-func (l *Lexer) skipMultiLineComment()  {
+func (l *Lexer) skipMultiLineComment() {
 	found := false
-	
+
 	for !found {
 		//break end of our input
 		if l.ch == byte(0) {
@@ -150,7 +150,6 @@ func (l *Lexer) skipMultiLineComment()  {
 
 	l.skipWhitespace()
 }
-
 
 func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {

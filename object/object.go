@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// BuiltinFunction holds the type of a built-in function.
 type BuiltinFunction func(args ...Object) Object
 
 type ObjectType string
