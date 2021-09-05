@@ -1,12 +1,20 @@
 package lexer
 
-import "monkey/token"
+import (
+	"monkey/token"
+)
 
 type Lexer struct {
 	input        string
-	position     int  // current position in input (points to current char)
-	readPosition int  // current reading position in input (after current char)
-	ch           byte // current char under examination
+
+	// current position in input (points to current char)
+	position     int  
+
+	// current reading position in input (after current char)
+	readPosition int  
+
+	// current char under examination
+	ch           byte 
 }
 
 func New(input string) *Lexer {
@@ -19,6 +27,18 @@ func (l *Lexer) NextToken() token.Token {
 	var tok token.Token
 
 	l.skipWhitespace()
+
+	// skip single-line comments
+	if l.ch == byte('#') || 
+		(l.ch == byte('/') && l.peekChar() == byte('/')) {
+			l.skipComment()
+			return (l.NextToken())
+		}
+
+	//multi-line comments
+	if l.ch == byte('/') && l.peekChar() == byte('*') {
+		l.skipMultiLineComment()
+	}
 
 	switch l.ch {
 	case '=':
@@ -98,6 +118,39 @@ func (l *Lexer) skipWhitespace() {
 		l.readChar()
 	}
 }
+
+//skip single-line comment
+func (l *Lexer) skipComment()  {
+	for l.ch != '\n' && l.ch != byte(0) {
+		l.readChar()
+	}
+	l.skipWhitespace()
+}
+
+//consume all tokens until we've had the close of multi-line comment
+func (l *Lexer) skipMultiLineComment()  {
+	found := false
+	
+	for !found {
+		//break end of our input
+		if l.ch == byte(0) {
+			found = true
+		}
+
+		//otherwise keep going untile out "*/"
+		if l.ch == '*' && l.peekChar() == '/' {
+			found = true
+
+			//our current position is "*",so skip
+			//forward to consume the "/".
+			l.readChar()
+		}
+		l.readChar()
+	}
+
+	l.skipWhitespace()
+}
+
 
 func (l *Lexer) readChar() {
 	if l.readPosition >= len(l.input) {
