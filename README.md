@@ -1,7 +1,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/LixvYang/Monkey)](https://goreportcard.com/report/github.com/LixvYang/Monkey)
 [![license](https://img.shields.io/github/license/lixvyang/monkey.svg)](https://img.shields.io/badge/LICENSE-MIT-brightgreen.svg)
-
-
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/lixvyang/monkey)
 
 - [Monkey](#monkey)
     - [My changes](#my-changes)
