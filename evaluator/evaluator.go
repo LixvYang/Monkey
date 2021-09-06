@@ -55,6 +55,9 @@ func Eval(node ast.Node, env *object.Environment) object.Object {
 			return right
 		}
 		return evalPrefixExpression(node.Operator, right)
+	
+	case *ast.PostfixExpression:
+		return evalPostfixExpression(env, node.Operator, node)
 
 	case *ast.InfixExpression:
 		left := Eval(node.Left, env)
@@ -193,6 +196,42 @@ func evalInfixExpression(
 	default:
 		return newError("unknown operator: %s %s %s",
 			left.Type(), operator, right.Type())
+	}
+}
+
+func evalPostfixExpression(env *object.Environment, operator string, node *ast.PostfixExpression) object.Object {
+	switch operator {
+	case "++":
+		val, ok := env.Get(node.Token.Literal)
+		if !ok {
+			return newError("%s is unknown", node.Token.Literal)
+		}
+
+		switch arg := val.(type) {
+		case *object.Integer:
+			v := arg.Value
+			env.Set(node.Token.Literal, &object.Integer{Value: v + 1})
+			return arg
+		default:
+			return newError("%s is not an int", node.Token.Literal)
+
+		}
+	case "--":
+		val, ok := env.Get(node.Token.Literal)
+		if !ok {
+			return newError("%s is unknown", node.Token.Literal)
+		}
+
+		switch arg := val.(type) {
+		case *object.Integer:
+			v := arg.Value
+			env.Set(node.Token.Literal, &object.Integer{Value: v - 1})
+			return arg
+		default:
+			return newError("%s is not an int", node.Token.Literal)
+		}
+	default:
+		return newError("unknown operator: %s", operator)
 	}
 }
 

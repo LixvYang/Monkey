@@ -25,6 +25,8 @@ const (
 	EQ     = "=="
 	NOT_EQ = "!="
 
+	MINUS_MINUS     = "--"
+	PLUS_PLUS	= "++"
 	// Delimiters
 	COMMA     = ","
 	SEMICOLON = ";"
