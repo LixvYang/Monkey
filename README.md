@@ -8,20 +8,22 @@
 - [1 Usage](#1-usage)
 - [2 Syntax](#2-syntax)
   - [2.1 Definitions](#21-definitions)
+- [LIXIN](#lixin)
 
 # Monkey
-Thanks powerful book [Write an Interpreter in Go](https://interpreterbook.com). I complete an interpreter for Monkey programminglanguage.
+Thanks powerful book 《Write an Interpreter in Go》 I complete an interpreter for Monkey programminglanguage.
 
 If you are favorite this repository,Click a :star: in the upper right corner please.
 
 ### My changes
 
 The original repository has a high degree of scalability.I did it:
-- Add single-line & multi-line comment.
-- soon on
+- Add built-in function.
+- Add single-line && multi-line comment.
+- Add postfix operators(i++...)
 
 ## Installation
-You can install binary release at right->
+You can install binary release at right-> **Init Monkey language state** for init realase.
 
 Or, you can install from source like so:
 
@@ -50,7 +52,7 @@ Variables are defined using the `let` keyword, with each line ending with `;`.
 ```js
 let a = 3;
 ```
-Variables may be integers, floats, strings, or arrays/hashes (which are discussed later).
+Variables may be integers, floats, strings, or arrays/hashes.
 
 Variables may be updated without the need for `let`, for example this works as you would expect:
 ```
@@ -58,3 +60,6 @@ Variables may be updated without the need for `let`, for example this works as y
     world = "world";
     puts( "Hello, " + world + "!\n");
 ```
+
+
+# LIXIN
